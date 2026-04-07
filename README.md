@@ -61,18 +61,49 @@ python3 ai_scan.py --feishu
 
 ### Configuration
 
-#### API Keys
+#### LLM API Configuration
 
-The tool requires a **DashScope API key** for AI summarization:
+The tool requires an **LLM API key** for AI-powered summarization. It supports any OpenAI-compatible API endpoint.
 
-1. Visit [DashScope Console](https://dashscope.console.aliyun.com/)
-2. Create an account and generate an API key
-3. Add to `.env` file:
-   ```
-   DASHSCOPE_API_KEY=your_key_here
-   ```
+**Recommended Options:**
 
-Optional: X/Twitter API bearer token for Twitter news (most sources work without it).
+1. **Alibaba Cloud DashScope (Qwen)** - Default, cost-effective
+   - Visit [DashScope Console](https://dashscope.console.aliyun.com/)
+   - Create account and generate API key
+   - Add to `.env`:
+     ```bash
+     LLM_API_KEY=your_key_here
+     LLM_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+     LLM_MODEL=qwen-turbo
+     ```
+
+2. **OpenAI**
+   - Get key at [OpenAI Platform](https://platform.openai.com/)
+   - Add to `.env`:
+     ```bash
+     LLM_API_KEY=sk-your_openai_key
+     LLM_BASE_URL=https://api.openai.com/v1
+     LLM_MODEL=gpt-4o-mini
+     ```
+
+3. **DeepSeek** - Cost-effective alternative
+   - Get key at [DeepSeek Platform](https://platform.deepseek.com/)
+   - Add to `.env`:
+     ```bash
+     LLM_API_KEY=your_deepseek_key
+     LLM_BASE_URL=https://api.deepseek.com/v1
+     LLM_MODEL=deepseek-chat
+     ```
+
+4. **Any OpenAI-compatible endpoint** (Ollama, LM Studio, etc.)
+   - Configure your endpoint in `.env`:
+     ```bash
+     LLM_API_KEY=your_key
+     LLM_BASE_URL=https://your-endpoint.com/v1
+     LLM_MODEL=your-model-name
+     ```
+
+**Optional:** X/Twitter API bearer token for Twitter news (most sources work without it).
 
 #### Command-Line Options
 
@@ -179,7 +210,7 @@ The tool maintains a SQLite database (`ai_scan.db`) to track seen items:
 ```bash
 # Make sure .env file exists and contains your key
 cat .env
-export DASHSCOPE_API_KEY=your_key_here
+export LLM_API_KEY=your_key_here
 python3 ai_scan.py
 ```
 
@@ -236,7 +267,7 @@ pip3 install -r requirements.txt
 
 # 配置 API 密钥
 cp .env.example .env
-# 编辑 .env 并添加你的 DASHSCOPE_API_KEY
+# 编辑 .env 并添加你的 LLM API 密钥
 ```
 
 #### 基本用法
@@ -263,18 +294,49 @@ python3 ai_scan.py --feishu
 
 ### 配置
 
-#### API 密钥
+#### LLM API 配置
 
-该工具需要 **DashScope API 密钥** 用于 AI 摘要：
+该工具需要 **LLM API 密钥** 用于 AI 驱动的摘要生成。支持任何 OpenAI 兼容的 API 端点。
 
-1. 访问 [DashScope 控制台](https://dashscope.console.aliyun.com/)
-2. 创建账户并生成 API 密钥
-3. 添加到 `.env` 文件：
-   ```
-   DASHSCOPE_API_KEY=你的密钥
-   ```
+**推荐选项：**
 
-可选：X/Twitter API bearer token 用于 Twitter 新闻（大多数来源无需此密钥即可工作）。
+1. **阿里云 DashScope (Qwen)** - 默认，性价比高
+   - 访问 [DashScope 控制台](https://dashscope.console.aliyun.com/)
+   - 创建账户并生成 API 密钥
+   - 添加到 `.env`：
+     ```bash
+     LLM_API_KEY=你的密钥
+     LLM_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+     LLM_MODEL=qwen-turbo
+     ```
+
+2. **OpenAI**
+   - 在 [OpenAI Platform](https://platform.openai.com/) 获取密钥
+   - 添加到 `.env`：
+     ```bash
+     LLM_API_KEY=sk-你的openai密钥
+     LLM_BASE_URL=https://api.openai.com/v1
+     LLM_MODEL=gpt-4o-mini
+     ```
+
+3. **DeepSeek** - 性价比高的替代方案
+   - 在 [DeepSeek Platform](https://platform.deepseek.com/) 获取密钥
+   - 添加到 `.env`：
+     ```bash
+     LLM_API_KEY=你的deepseek密钥
+     LLM_BASE_URL=https://api.deepseek.com/v1
+     LLM_MODEL=deepseek-chat
+     ```
+
+4. **任何 OpenAI 兼容端点** (Ollama, LM Studio 等)
+   - 在 `.env` 中配置你的端点：
+     ```bash
+     LLM_API_KEY=你的密钥
+     LLM_BASE_URL=https://你的端点.com/v1
+     LLM_MODEL=你的模型名称
+     ```
+
+**可选：** X/Twitter API bearer token 用于 Twitter 新闻（大多数来源无需此密钥即可工作）。
 
 #### 命令行选项
 
@@ -381,7 +443,7 @@ python3 ai_scan.py --json | jq '.items[] | select(.score > 60)'
 ```bash
 # 确保 .env 文件存在并包含你的密钥
 cat .env
-export DASHSCOPE_API_KEY=你的密钥
+export LLM_API_KEY=你的密钥
 python3 ai_scan.py
 ```
 

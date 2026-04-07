@@ -37,10 +37,13 @@ except ImportError:
 # ============================================
 # Configuration
 # ============================================
-QWEN_CONFIG = {
-    "api_key": os.environ.get("DASHSCOPE_API_KEY", ""),
-    "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
-    "model": "qwen-turbo",
+# LLM Configuration - Supports any OpenAI-compatible API
+# Default: Alibaba Cloud DashScope (Qwen)
+# You can use: OpenAI, Anthropic, DeepSeek, or any OpenAI-compatible endpoint
+LLM_CONFIG = {
+    "api_key": os.environ.get("LLM_API_KEY", ""),
+    "base_url": os.environ.get("LLM_BASE_URL", "https://dashscope.aliyuncs.com/compatible-mode/v1"),
+    "model": os.environ.get("LLM_MODEL", "qwen-turbo"),
 }
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -645,10 +648,10 @@ def summarize_batch(items, batch_size=8):
 
         try:
             resp = requests.post(
-                f"{QWEN_CONFIG['base_url']}/chat/completions",
-                headers={"Authorization": f"Bearer {QWEN_CONFIG['api_key']}"},
+                f"{LLM_CONFIG['base_url']}/chat/completions",
+                headers={"Authorization": f"Bearer {LLM_CONFIG['api_key']}"},
                 json={
-                    "model": QWEN_CONFIG["model"],
+                    "model": LLM_CONFIG["model"],
                     "messages": [{"role": "user", "content": prompt}],
                     "temperature": 0.3,
                     "max_tokens": 1000,
